@@ -1,0 +1,16 @@
+# Caché del editor de Godot (se regenera sola al abrir el proyecto)
+.godot/
+
+# Exportaciones del juego
+/build/
+/export/
+*.x86_64
+*.exe
+*.pck
+
+# Python
+__pycache__/
+
+# Sistema
+.DS_Store
+Thumbs.db

@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://ghost_enemy"]
+
+[ext_resource type="Script" path="res://scripts/GhostEnemy.gd" id="1_ghost"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/character1.png" id="2_tex"]
+
+[sub_resource type="RectangleShape2D" id="Shape_body"]
+size = Vector2(10, 22)
+
+[sub_resource type="RectangleShape2D" id="Shape_hitbox"]
+size = Vector2(12, 22)
+
+[node name="GhostEnemy" type="CharacterBody2D"]
+collision_layer = 0
+script = ExtResource("1_ghost")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -11)
+shape = SubResource("Shape_body")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -16)
+texture = ExtResource("2_tex")
+hframes = 6
+
+[node name="HitArea" type="Area2D" parent="."]
+
+[node name="HitCollision" type="CollisionShape2D" parent="HitArea"]
+position = Vector2(0, -11)
+shape = SubResource("Shape_hitbox")

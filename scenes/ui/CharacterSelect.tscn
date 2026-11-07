@@ -1,0 +1,332 @@
+[gd_scene load_steps=6 format=3 uid="uid://character_select"]
+
+[ext_resource type="Script" path="res://scripts/CharacterSelect.gd" id="1_cs"]
+[ext_resource type="PackedScene" path="res://scenes/ui/MenuBackground.tscn" id="2_bg"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/menu_scene.png" id="3_scene"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/card.png" id="4_card"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_info"]
+bg_color = Color(0.99, 0.84, 0.89, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.96, 0.59, 0.71, 1)
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+
+[node name="CharacterSelect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_cs")
+
+[node name="MenuBackground" parent="." instance=ExtResource("2_bg")]
+layout_mode = 0
+
+[node name="Scene" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+texture = ExtResource("3_scene")
+
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 0
+offset_top = 6.0
+offset_right = 320.0
+offset_bottom = 22.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.84, 0.38, 0.55, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 10
+text = "¿Quién entregará la carta?"
+horizontal_alignment = 1
+
+[node name="Cards" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 24.0
+offset_right = 316.0
+offset_bottom = 132.0
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="Card1" type="Control" parent="Cards"]
+custom_minimum_size = Vector2(58, 108)
+layout_mode = 2
+
+[node name="Bg" type="TextureRect" parent="Cards/Card1"]
+layout_mode = 0
+offset_right = 58.0
+offset_bottom = 108.0
+mouse_filter = 2
+texture = ExtResource("4_card")
+
+[node name="Portrait" type="TextureRect" parent="Cards/Card1"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 6.0
+offset_right = 53.0
+offset_bottom = 70.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="NameLabel" type="Label" parent="Cards/Card1"]
+layout_mode = 0
+offset_top = 71.0
+offset_right = 58.0
+offset_bottom = 81.0
+theme_override_colors/font_color = Color(0.45, 0.12, 0.28, 1)
+theme_override_font_sizes/font_size = 7
+horizontal_alignment = 1
+
+[node name="PlayButton" type="Button" parent="Cards/Card1"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 82.0
+offset_right = 49.0
+offset_bottom = 93.0
+theme_type_variation = &"PillButton"
+text = "Jugar"
+
+[node name="SheetButton" type="Button" parent="Cards/Card1"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 95.0
+offset_right = 49.0
+offset_bottom = 106.0
+theme_type_variation = &"PillButton"
+text = "Hoja"
+
+[node name="Card2" type="Control" parent="Cards"]
+custom_minimum_size = Vector2(58, 108)
+layout_mode = 2
+
+[node name="Bg" type="TextureRect" parent="Cards/Card2"]
+layout_mode = 0
+offset_right = 58.0
+offset_bottom = 108.0
+mouse_filter = 2
+texture = ExtResource("4_card")
+
+[node name="Portrait" type="TextureRect" parent="Cards/Card2"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 6.0
+offset_right = 53.0
+offset_bottom = 70.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="NameLabel" type="Label" parent="Cards/Card2"]
+layout_mode = 0
+offset_top = 71.0
+offset_right = 58.0
+offset_bottom = 81.0
+theme_override_colors/font_color = Color(0.45, 0.12, 0.28, 1)
+theme_override_font_sizes/font_size = 7
+horizontal_alignment = 1
+
+[node name="PlayButton" type="Button" parent="Cards/Card2"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 82.0
+offset_right = 49.0
+offset_bottom = 93.0
+theme_type_variation = &"PillButton"
+text = "Jugar"
+
+[node name="SheetButton" type="Button" parent="Cards/Card2"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 95.0
+offset_right = 49.0
+offset_bottom = 106.0
+theme_type_variation = &"PillButton"
+text = "Hoja"
+
+[node name="Card3" type="Control" parent="Cards"]
+custom_minimum_size = Vector2(58, 108)
+layout_mode = 2
+
+[node name="Bg" type="TextureRect" parent="Cards/Card3"]
+layout_mode = 0
+offset_right = 58.0
+offset_bottom = 108.0
+mouse_filter = 2
+texture = ExtResource("4_card")
+
+[node name="PendingLabel" type="Label" parent="Cards/Card3"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 6.0
+offset_right = 53.0
+offset_bottom = 70.0
+theme_override_colors/font_color = Color(0.45, 0.12, 0.28, 1)
+text = "Por
+definir."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Card4" type="Control" parent="Cards"]
+custom_minimum_size = Vector2(58, 108)
+layout_mode = 2
+
+[node name="Bg" type="TextureRect" parent="Cards/Card4"]
+layout_mode = 0
+offset_right = 58.0
+offset_bottom = 108.0
+mouse_filter = 2
+texture = ExtResource("4_card")
+
+[node name="PendingLabel" type="Label" parent="Cards/Card4"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 6.0
+offset_right = 53.0
+offset_bottom = 70.0
+theme_override_colors/font_color = Color(0.45, 0.12, 0.28, 1)
+text = "Por
+definir."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Card5" type="Control" parent="Cards"]
+custom_minimum_size = Vector2(58, 108)
+layout_mode = 2
+
+[node name="Bg" type="TextureRect" parent="Cards/Card5"]
+layout_mode = 0
+offset_right = 58.0
+offset_bottom = 108.0
+mouse_filter = 2
+texture = ExtResource("4_card")
+
+[node name="Portrait" type="TextureRect" parent="Cards/Card5"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 6.0
+offset_right = 53.0
+offset_bottom = 70.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="NameLabel" type="Label" parent="Cards/Card5"]
+layout_mode = 0
+offset_top = 71.0
+offset_right = 58.0
+offset_bottom = 81.0
+theme_override_colors/font_color = Color(0.45, 0.12, 0.28, 1)
+theme_override_font_sizes/font_size = 7
+horizontal_alignment = 1
+
+[node name="PlayButton" type="Button" parent="Cards/Card5"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 82.0
+offset_right = 49.0
+offset_bottom = 93.0
+theme_type_variation = &"PillButton"
+text = "Jugar"
+
+[node name="SheetButton" type="Button" parent="Cards/Card5"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 95.0
+offset_right = 49.0
+offset_bottom = 106.0
+theme_type_variation = &"PillButton"
+text = "Hoja"
+
+[node name="StatusLabel" type="Label" parent="."]
+layout_mode = 0
+offset_top = 134.0
+offset_right = 320.0
+offset_bottom = 146.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.84, 0.38, 0.55, 1)
+theme_override_constants/outline_size = 3
+text = "Fresas encontradas: 0/2"
+horizontal_alignment = 1
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 126.0
+offset_top = 150.0
+offset_right = 194.0
+offset_bottom = 168.0
+text = "← Volver"
+
+[node name="SheetPanel" type="Control" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 180.0
+
+[node name="Dim" type="ColorRect" parent="SheetPanel"]
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 180.0
+color = Color(0.2, 0.05, 0.15, 0.45)
+
+[node name="Sheet" type="PanelContainer" parent="SheetPanel"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 20.0
+offset_right = 296.0
+offset_bottom = 160.0
+
+[node name="Portrait" type="TextureRect" parent="SheetPanel/Sheet"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_minimum_size = Vector2(72, 96)
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Info" type="PanelContainer" parent="SheetPanel/Sheet"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+custom_minimum_size = Vector2(170, 104)
+theme_override_styles/panel = SubResource("StyleBox_info")
+
+[node name="VBox" type="VBoxContainer" parent="SheetPanel/Sheet/Info"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="NameLabel" type="Label" parent="SheetPanel/Sheet/Info/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.12, 0.28, 1)
+text = "Nombre"
+autowrap_mode = 3
+
+[node name="AbilityLabel" type="Label" parent="SheetPanel/Sheet/Info/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.12, 0.28, 1)
+text = "Habilidad"
+autowrap_mode = 3
+
+[node name="StoryLabel" type="Label" parent="SheetPanel/Sheet/Info/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.12, 0.28, 1)
+text = "Breve historia"
+autowrap_mode = 3
+
+[node name="CloseButton" type="Button" parent="SheetPanel/Sheet"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+custom_minimum_size = Vector2(60, 12)
+theme_type_variation = &"PillButton"
+text = "Volver"
+
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="SheetPanel/Sheet/CloseButton" to="." method="_on_close_sheet_pressed"]

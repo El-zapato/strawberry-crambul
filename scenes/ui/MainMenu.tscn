@@ -1,0 +1,126 @@
+[gd_scene load_steps=6 format=3 uid="uid://main_menu"]
+
+[ext_resource type="Script" path="res://scripts/MainMenu.gd" id="1_mainmenu"]
+[ext_resource type="PackedScene" path="res://scenes/ui/MenuBackground.tscn" id="2_bg"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/menu_scene.png" id="3_scene"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/title.png" id="4_title"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/letter.png" id="5_letter"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_mainmenu")
+
+[node name="MenuBackground" parent="." instance=ExtResource("2_bg")]
+layout_mode = 0
+
+[node name="Scene" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+texture = ExtResource("3_scene")
+
+[node name="Title" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 65.0
+offset_top = 4.0
+offset_right = 255.0
+offset_bottom = 62.0
+mouse_filter = 2
+texture = ExtResource("4_title")
+
+[node name="Letter" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 66.0
+offset_right = 220.0
+offset_bottom = 150.0
+texture = ExtResource("5_letter")
+
+[node name="VBox" type="VBoxContainer" parent="Letter"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 30.0
+offset_right = 100.0
+offset_bottom = 80.0
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="PlayButton" type="Button" parent="Letter/VBox"]
+layout_mode = 2
+theme_type_variation = &"LetterButton"
+text = "Iniciar"
+
+[node name="OptionsButton" type="Button" parent="Letter/VBox"]
+layout_mode = 2
+theme_type_variation = &"LetterButton"
+text = "Opciones"
+
+[node name="QuitButton" type="Button" parent="Letter/VBox"]
+layout_mode = 2
+theme_type_variation = &"LetterButton"
+text = "Salir"
+
+[node name="OptionsPanel" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 100.0
+offset_top = 62.0
+offset_right = 220.0
+offset_bottom = 148.0
+
+[node name="VBox" type="VBoxContainer" parent="OptionsPanel"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Label" type="Label" parent="OptionsPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.84, 0.38, 0.55, 1)
+theme_override_font_sizes/font_size = 10
+text = "Opciones"
+horizontal_alignment = 1
+
+[node name="MusicButton" type="Button" parent="OptionsPanel/VBox"]
+layout_mode = 2
+text = "Música: Sí"
+
+[node name="SfxButton" type="Button" parent="OptionsPanel/VBox"]
+layout_mode = 2
+text = "Sonido: Sí"
+
+[node name="CloseButton" type="Button" parent="OptionsPanel/VBox"]
+layout_mode = 2
+theme_type_variation = &"PillButton"
+text = "Volver"
+
+[node name="HiddenReset" type="Button" parent="."]
+layout_mode = 0
+offset_top = 162.0
+offset_right = 72.0
+offset_bottom = 180.0
+focus_mode = 0
+theme_type_variation = &"LetterButton"
+theme_override_font_sizes/font_size = 7
+text = "Nueva partida"
+
+[node name="ResetLabel" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 4.0
+offset_top = 136.0
+offset_right = 160.0
+offset_bottom = 150.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 3
+text = "Partida reiniciada"
+
+[connection signal="pressed" from="Letter/VBox/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="Letter/VBox/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="Letter/VBox/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="OptionsPanel/VBox/MusicButton" to="." method="_on_music_button_pressed"]
+[connection signal="pressed" from="OptionsPanel/VBox/SfxButton" to="." method="_on_sfx_button_pressed"]
+[connection signal="pressed" from="OptionsPanel/VBox/CloseButton" to="." method="_on_close_options_pressed"]
+[connection signal="pressed" from="HiddenReset" to="." method="_on_hidden_reset_pressed"]

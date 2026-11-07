@@ -1,0 +1,129 @@
+extends CharacterBody2D
+# Personaje 1 — Paraguas
+# Movimiento lateral + vuelo temporal (caída lenta con paraguas).
+# También lo usa el Personaje Secreto (CharacterSecret.gd) con otros valores.
+
+signal lives_changed(current: int)
+
+@export var character_id := "character1"
+@export var speed := 110.0
+@export var jump_force := -320.0
+@export var can_glide := true
+## Segundos que dura el vuelo con paraguas antes de cerrarse (se recarga al tocar suelo)
+@export var glide_time := 1.5
+@export var glide_fall_speed := 35.0
+## Si el personaje cae por debajo de esta Y, cayó a un abismo
+@export var fall_limit := 340.0
+
+const GRAVITY := 980.0
+const MAX_LIVES := 3
+const INVULNERABLE_TIME := 1.5
+
+enum Frame { IDLE, RUN_A, RUN_B, JUMP, GLIDE, DEAD }
+
+var lives := MAX_LIVES
+var is_gliding := false
+var glide_left := 0.0
+var respawn_point := Vector2.ZERO
+var controls_enabled := true
+var invulnerable := false
+var dying := false
+var hud: Node = null
+var _anim_time := 0.0
+
+@onready var sprite: Sprite2D = $Sprite2D
+
+func _ready() -> void:
+	add_to_group("player")
+	respawn_point = global_position
+	glide_left = glide_time
+	# HUD se busca en el nivel padre
+	hud = get_tree().get_first_node_in_group("hud")
+	if hud:
+		hud.update_lives(lives)
+
+func _physics_process(delta: float) -> void:
+	if dying:
+		return
+
+	var on_floor := is_on_floor()
+	if on_floor:
+		glide_left = glide_time
+
+	var jump_held := controls_enabled and Input.is_action_pressed("jump")
+	var was_gliding := is_gliding
+	is_gliding = can_glide and jump_held and not on_floor and velocity.y > 0 and glide_left > 0
+	if is_gliding and not was_gliding:
+		AudioManager.play_sfx("glide")
+	if is_gliding:
+		glide_left -= delta
+		velocity.y = min(velocity.y + GRAVITY * delta, glide_fall_speed)
+	elif not on_floor:
+		velocity.y += GRAVITY * delta
+
+	if controls_enabled and Input.is_action_just_pressed("jump") and on_floor:
+		velocity.y = jump_force
+		AudioManager.play_sfx("jump")
+
+	var direction := Input.get_axis("move_left", "move_right") if controls_enabled else 0.0
+	velocity.x = direction * speed
+
+	move_and_slide()
+	_animate(delta, direction)
+
+	if global_position.y > fall_limit:
+		# Cayó al abismo: pierde una vida aunque sea invulnerable
+		take_damage(true)
+
+func _animate(delta: float, direction: float) -> void:
+	if direction != 0:
+		sprite.flip_h = direction < 0
+	if is_gliding:
+		sprite.frame = Frame.GLIDE
+	elif not is_on_floor():
+		sprite.frame = Frame.JUMP
+	elif direction != 0:
+		_anim_time += delta
+		sprite.frame = Frame.RUN_A if int(_anim_time * 8) % 2 == 0 else Frame.RUN_B
+	else:
+		_anim_time = 0.0
+		sprite.frame = Frame.IDLE
+
+func take_damage(ignore_invulnerability := false) -> void:
+	if dying or (invulnerable and not ignore_invulnerability):
+		return
+	lives -= 1
+	lives_changed.emit(lives)
+	if hud:
+		hud.update_lives(lives)
+	if lives <= 0:
+		_die()
+	else:
+		AudioManager.play_sfx("hurt")
+		_respawn()
+
+func _respawn() -> void:
+	global_position = respawn_point
+	velocity = Vector2.ZERO
+	_start_invulnerability()
+
+func _start_invulnerability() -> void:
+	invulnerable = true
+	var tween := create_tween().set_loops(6)
+	tween.tween_property(sprite, "modulate:a", 0.2, 0.125)
+	tween.tween_property(sprite, "modulate:a", 1.0, 0.125)
+	await get_tree().create_timer(INVULNERABLE_TIME).timeout
+	invulnerable = false
+	sprite.modulate.a = 1.0
+
+func _die() -> void:
+	# Se muestra el cuerpo unos segundos antes del jumpscare
+	dying = true
+	velocity = Vector2.ZERO
+	sprite.frame = Frame.DEAD
+	sprite.modulate = Color(1, 0.6, 0.6)
+	AudioManager.stop_music(0.3)
+	AudioManager.play_sfx("death")
+	GameData.kill_character(character_id)
+	await get_tree().create_timer(1.5).timeout
+	SceneManager.go_to_death_screen(character_id)

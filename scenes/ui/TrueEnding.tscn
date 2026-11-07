@@ -1,0 +1,61 @@
+[gd_scene load_steps=4 format=3 uid="uid://true_ending"]
+
+[ext_resource type="Script" path="res://scripts/TrueEnding.gd" id="1_true"]
+[ext_resource type="PackedScene" path="res://scenes/ui/MenuBackground.tscn" id="2_bg"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/true_ending_scene.png" id="3_scene"]
+
+[node name="TrueEnding" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_true")
+
+[node name="MenuBackground" parent="." instance=ExtResource("2_bg")]
+modulate = Color(1, 1, 1, 1)
+layout_mode = 0
+
+[node name="Scene" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 1)
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+texture = ExtResource("3_scene")
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 8.0
+offset_right = 280.0
+offset_bottom = 84.0
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="TitleLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.4, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_outline_color = Color(0.45, 0.12, 0.28, 1)
+theme_override_constants/outline_size = 2
+text = "FINAL VERDADERO"
+horizontal_alignment = 1
+
+[node name="NarrativeLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.12, 0.28, 1)
+text = "La Carpintera cruzó el abismo.\nCon sus herramientas y los secretos descubiertos,\nreconstruyó el puente y salvó a todos."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 152.0
+offset_right = 210.0
+offset_bottom = 170.0
+text = "Menú Principal"
+
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
