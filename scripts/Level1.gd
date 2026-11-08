@@ -7,9 +7,9 @@ extends Node2D
 @export var secret_scene: PackedScene
 @export var ghost_scene: PackedScene
 ## Tamaño del nivel en pixeles (límites de la cámara)
-@export var level_size := Vector2i(2400, 320)
+@export var level_size := Vector2i(4800, 640)
 ## Cuánto se desplaza la cámara para mostrar la casa de la carpintera
-@export var bridge_view_offset := 300.0
+@export var bridge_view_offset := 600.0
 
 const INTRO_TEXT := "Entrega tu carta de confesión a la carpintera que vive en la colina."
 const BRIDGE_TEXTS := [
@@ -53,7 +53,7 @@ func _spawn_player() -> void:
 	camera.limit_bottom = level_size.y
 	camera.position_smoothing_enabled = true
 	camera.position_smoothing_speed = 6.0
-	camera.position.y = -16
+	camera.position.y = -32
 	player.add_child(camera)
 
 func _spawn_ghosts() -> void:

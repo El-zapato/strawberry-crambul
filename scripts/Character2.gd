@@ -11,7 +11,10 @@ var hud: Node = null
 
 func _ready() -> void:
 	add_to_group("player")
+	lives = GameData.get_lives("character2")
 	hud = get_tree().get_first_node_in_group("hud")
+	if hud:
+		hud.update_lives(lives)
 
 func _physics_process(_delta: float) -> void:
 	var direction := Vector2(
@@ -38,6 +41,8 @@ func _shoot() -> void:
 func take_damage() -> void:
 	lives -= 1
 	AudioManager.play_sfx("hurt" if lives > 0 else "death")
+	if lives > 0:
+		GameData.set_lives("character2", lives)
 	if hud:
 		hud.update_lives(lives)
 	if lives <= 0:

@@ -20,7 +20,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	_time += delta
-	title.position.y = _title_y + round(sin(_time * 1.5) * 2.0)
+	title.position.y = _title_y + round(sin(_time * 1.5) * 4.0)
 
 func _on_play_button_pressed() -> void:
 	SceneManager.go_to_character_select()

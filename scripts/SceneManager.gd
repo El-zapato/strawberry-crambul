@@ -7,6 +7,8 @@ var last_dead_character := ""
 var current_character := "character1"
 
 func go_to(path: String) -> void:
+	# Por si se sale desde el menú de pausa
+	get_tree().paused = false
 	get_tree().change_scene_to_file(path)
 
 func go_to_main_menu() -> void:

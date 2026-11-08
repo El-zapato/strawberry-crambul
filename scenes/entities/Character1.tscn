@@ -4,16 +4,16 @@
 [ext_resource type="Texture2D" path="res://assets/sprites/characters/character1.png" id="2_tex"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
-size = Vector2(10, 22)
+size = Vector2(20, 44)
 
 [node name="Character1" type="CharacterBody2D"]
 script = ExtResource("1_char1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -11)
+position = Vector2(0, -22)
 shape = SubResource("RectangleShape2D_1")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -16)
+position = Vector2(0, -32)
 texture = ExtResource("2_tex")
 hframes = 6

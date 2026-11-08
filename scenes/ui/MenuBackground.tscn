@@ -9,22 +9,22 @@
 [node name="MenuBackground" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 320.0
-offset_bottom = 180.0
+offset_right = 640.0
+offset_bottom = 360.0
 mouse_filter = 2
 
 [node name="Sky" type="TextureRect" parent="."]
 layout_mode = 0
-offset_right = 320.0
-offset_bottom = 180.0
+offset_right = 640.0
+offset_bottom = 360.0
 mouse_filter = 2
 texture = ExtResource("1_sky")
 
 [node name="Clouds" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = -320.0
-offset_right = 320.0
-offset_bottom = 180.0
+offset_left = -640.0
+offset_right = 640.0
+offset_bottom = 360.0
 mouse_filter = 2
 texture = ExtResource("2_clouds")
 stretch_mode = 1
@@ -32,14 +32,14 @@ script = ExtResource("3_cloud")
 
 [node name="HillsFar" type="TextureRect" parent="."]
 layout_mode = 0
-offset_right = 320.0
-offset_bottom = 180.0
+offset_right = 640.0
+offset_bottom = 360.0
 mouse_filter = 2
 texture = ExtResource("4_far")
 
 [node name="HillsNear" type="TextureRect" parent="."]
 layout_mode = 0
-offset_right = 320.0
-offset_bottom = 180.0
+offset_right = 640.0
+offset_bottom = 360.0
 mouse_filter = 2
 texture = ExtResource("5_near")
