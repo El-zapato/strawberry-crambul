@@ -11,7 +11,7 @@ var _time := 0.0
 
 func _process(delta: float) -> void:
 	_time += delta
-	sprite.position.y = round(sin(_time * 3.0) * 2.0)
+	sprite.position.y = round(sin(_time * 3.0) * 4.0)
 
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):

@@ -5,26 +5,26 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_msg"]
 bg_color = Color(1, 0.97, 0.91, 0.95)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
 border_color = Color(0.96, 0.59, 0.71, 1)
-content_margin_left = 6.0
-content_margin_top = 4.0
-content_margin_right = 6.0
-content_margin_bottom = 4.0
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
 
 [node name="HUD" type="CanvasLayer"]
 layer = 10
 script = ExtResource("1_hud")
 
 [node name="Hearts" type="HBoxContainer" parent="."]
-offset_left = 6.0
-offset_top = 6.0
-offset_right = 46.0
-offset_bottom = 15.0
-theme_override_constants/separation = 2
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 92.0
+offset_bottom = 30.0
+theme_override_constants/separation = 4
 
 [node name="Heart1" type="TextureRect" parent="Hearts"]
 layout_mode = 2
@@ -42,16 +42,66 @@ texture = ExtResource("2_heart")
 stretch_mode = 2
 
 [node name="MessagePanel" type="PanelContainer" parent="."]
-offset_left = 52.0
-offset_top = 4.0
-offset_right = 316.0
-offset_bottom = 34.0
+offset_left = 104.0
+offset_top = 8.0
+offset_right = 632.0
+offset_bottom = 68.0
 theme_override_styles/panel = SubResource("StyleBox_msg")
 
 [node name="MessageLabel" type="Label" parent="MessagePanel"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.45, 0.12, 0.28, 1)
-theme_override_font_sizes/font_size = 8
+theme_override_font_sizes/font_size = 16
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
+
+[node name="PausePanel" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="Dim" type="ColorRect" parent="PausePanel"]
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 360.0
+color = Color(0.2, 0.05, 0.15, 0.5)
+
+[node name="Panel" type="PanelContainer" parent="PausePanel"]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 100.0
+offset_right = 440.0
+offset_bottom = 268.0
+
+[node name="VBox" type="VBoxContainer" parent="PausePanel/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="Title" type="Label" parent="PausePanel/Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.84, 0.38, 0.55, 1)
+theme_override_font_sizes/font_size = 20
+text = "Pausa"
+horizontal_alignment = 1
+
+[node name="ContinueButton" type="Button" parent="PausePanel/Panel/VBox"]
+layout_mode = 2
+text = "Continuar"
+
+[node name="MenuButton" type="Button" parent="PausePanel/Panel/VBox"]
+layout_mode = 2
+text = "Salir al menú"
+
+[node name="Hint" type="Label" parent="PausePanel/Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.12, 0.28, 1)
+theme_override_font_sizes/font_size = 12
+text = "Tus corazones se guardan.
+Al volver empiezas desde el inicio."
+horizontal_alignment = 1
+
+[connection signal="pressed" from="PausePanel/Panel/VBox/ContinueButton" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="PausePanel/Panel/VBox/MenuButton" to="." method="_on_menu_pressed"]

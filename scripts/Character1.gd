@@ -6,22 +6,21 @@ extends CharacterBody2D
 signal lives_changed(current: int)
 
 @export var character_id := "character1"
-@export var speed := 110.0
-@export var jump_force := -320.0
+@export var speed := 220.0
+@export var jump_force := -640.0
 @export var can_glide := true
 ## Segundos que dura el vuelo con paraguas antes de cerrarse (se recarga al tocar suelo)
 @export var glide_time := 1.5
-@export var glide_fall_speed := 35.0
+@export var glide_fall_speed := 70.0
 ## Si el personaje cae por debajo de esta Y, cayó a un abismo
-@export var fall_limit := 340.0
+@export var fall_limit := 680.0
 
-const GRAVITY := 980.0
-const MAX_LIVES := 3
+const GRAVITY := 1960.0
 const INVULNERABLE_TIME := 1.5
 
 enum Frame { IDLE, RUN_A, RUN_B, JUMP, GLIDE, DEAD }
 
-var lives := MAX_LIVES
+var lives := 3
 var is_gliding := false
 var glide_left := 0.0
 var respawn_point := Vector2.ZERO
@@ -35,6 +34,8 @@ var _anim_time := 0.0
 
 func _ready() -> void:
 	add_to_group("player")
+	# Los corazones del intento se conservan aunque se salga del nivel
+	lives = GameData.get_lives(character_id)
 	respawn_point = global_position
 	glide_left = glide_time
 	# HUD se busca en el nivel padre
@@ -94,6 +95,9 @@ func take_damage(ignore_invulnerability := false) -> void:
 		return
 	lives -= 1
 	lives_changed.emit(lives)
+	if lives > 0:
+		# Se guarda en el momento: cerrar el juego no devuelve el corazón
+		GameData.set_lives(character_id, lives)
 	if hud:
 		hud.update_lives(lives)
 	if lives <= 0:
@@ -112,7 +116,7 @@ func _start_invulnerability() -> void:
 	var tween := create_tween().set_loops(6)
 	tween.tween_property(sprite, "modulate:a", 0.2, 0.125)
 	tween.tween_property(sprite, "modulate:a", 1.0, 0.125)
-	await get_tree().create_timer(INVULNERABLE_TIME).timeout
+	await get_tree().create_timer(INVULNERABLE_TIME, false).timeout
 	invulnerable = false
 	sprite.modulate.a = 1.0
 
@@ -125,5 +129,5 @@ func _die() -> void:
 	AudioManager.stop_music(0.3)
 	AudioManager.play_sfx("death")
 	GameData.kill_character(character_id)
-	await get_tree().create_timer(1.5).timeout
+	await get_tree().create_timer(1.5, false).timeout
 	SceneManager.go_to_death_screen(character_id)

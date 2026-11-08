@@ -18,34 +18,34 @@ layout_mode = 0
 
 [node name="Scene" type="TextureRect" parent="."]
 layout_mode = 0
-offset_right = 320.0
-offset_bottom = 180.0
+offset_right = 640.0
+offset_bottom = 360.0
 mouse_filter = 2
 texture = ExtResource("3_scene")
 
 [node name="Title" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 65.0
-offset_top = 4.0
-offset_right = 255.0
-offset_bottom = 62.0
+offset_left = 130.0
+offset_top = 8.0
+offset_right = 510.0
+offset_bottom = 124.0
 mouse_filter = 2
 texture = ExtResource("4_title")
 
 [node name="Letter" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 100.0
-offset_top = 66.0
-offset_right = 220.0
-offset_bottom = 150.0
+offset_left = 200.0
+offset_top = 132.0
+offset_right = 440.0
+offset_bottom = 300.0
 texture = ExtResource("5_letter")
 
 [node name="VBox" type="VBoxContainer" parent="Letter"]
 layout_mode = 0
-offset_left = 20.0
-offset_top = 30.0
-offset_right = 100.0
-offset_bottom = 80.0
+offset_left = 40.0
+offset_top = 60.0
+offset_right = 200.0
+offset_bottom = 160.0
 theme_override_constants/separation = 0
 alignment = 1
 
@@ -67,19 +67,19 @@ text = "Salir"
 [node name="OptionsPanel" type="PanelContainer" parent="."]
 visible = false
 layout_mode = 0
-offset_left = 100.0
-offset_top = 62.0
-offset_right = 220.0
-offset_bottom = 148.0
+offset_left = 200.0
+offset_top = 124.0
+offset_right = 440.0
+offset_bottom = 296.0
 
 [node name="VBox" type="VBoxContainer" parent="OptionsPanel"]
 layout_mode = 2
-theme_override_constants/separation = 4
+theme_override_constants/separation = 8
 
 [node name="Label" type="Label" parent="OptionsPanel/VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.84, 0.38, 0.55, 1)
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 20
 text = "Opciones"
 horizontal_alignment = 1
 
@@ -98,23 +98,23 @@ text = "Volver"
 
 [node name="HiddenReset" type="Button" parent="."]
 layout_mode = 0
-offset_top = 162.0
-offset_right = 72.0
-offset_bottom = 180.0
+offset_top = 324.0
+offset_right = 144.0
+offset_bottom = 360.0
 focus_mode = 0
 theme_type_variation = &"LetterButton"
-theme_override_font_sizes/font_size = 7
+theme_override_font_sizes/font_size = 14
 text = "Nueva partida"
 
 [node name="ResetLabel" type="Label" parent="."]
 visible = false
 layout_mode = 0
-offset_left = 4.0
-offset_top = 136.0
-offset_right = 160.0
-offset_bottom = 150.0
+offset_left = 8.0
+offset_top = 272.0
+offset_right = 320.0
+offset_bottom = 300.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 3
+theme_override_constants/outline_size = 6
 text = "Partida reiniciada"
 
 [connection signal="pressed" from="Letter/VBox/PlayButton" to="." method="_on_play_button_pressed"]

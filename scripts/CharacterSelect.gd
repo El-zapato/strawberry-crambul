@@ -4,6 +4,8 @@ extends Control
 
 const FRAME_IDLE := 0
 const FRAME_DEAD := 5
+const HEART_FULL := preload("res://assets/sprites/ui/heart_full.png")
+const HEART_EMPTY := preload("res://assets/sprites/ui/heart_empty.png")
 
 # Nombre, habilidad y breve historia de cada personaje (para la "Hoja").
 # El diseño y la personalidad definitivos están pendientes por el equipo.
@@ -53,6 +55,7 @@ func _refresh_ui() -> void:
 		var dead := GameData.is_dead(id)
 		card.get_node("Portrait").texture = _portrait(id, dead)
 		card.get_node("NameLabel").text = CHARACTERS[id]["name"]
+		_show_hearts(card, id, dead)
 		var play: Button = card.get_node("PlayButton")
 		# Muerto: ya no se puede jugar, solo ver su hoja
 		play.visible = not dead
@@ -68,10 +71,31 @@ func _refresh_ui() -> void:
 	if first_focus:
 		first_focus.grab_focus()
 
+func _show_hearts(card: Control, id: String, dead: bool) -> void:
+	# Corazones que le quedan en su intento, en la esquina del retrato
+	var box: HBoxContainer = card.get_node_or_null("Hearts")
+	if box == null:
+		box = HBoxContainer.new()
+		box.name = "Hearts"
+		box.position = Vector2(74, 14)
+		box.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		box.add_theme_constant_override("separation", 1)
+		card.add_child(box)
+		for i in GameData.MAX_LIVES:
+			var heart := TextureRect.new()
+			heart.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+			heart.custom_minimum_size = Vector2(10, 9)
+			heart.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			box.add_child(heart)
+	box.visible = not dead
+	var lives := GameData.get_lives(id)
+	for i in box.get_child_count():
+		box.get_child(i).texture = HEART_FULL if i < lives else HEART_EMPTY
+
 func _portrait(id: String, dead: bool) -> AtlasTexture:
 	var tex := AtlasTexture.new()
 	tex.atlas = load(CHARACTERS[id]["sheet"])
-	tex.region = Rect2((FRAME_DEAD if dead else FRAME_IDLE) * 24, 0, 24, 32)
+	tex.region = Rect2((FRAME_DEAD if dead else FRAME_IDLE) * 48, 0, 48, 64)
 	return tex
 
 func _on_play_pressed(id: String) -> void:
@@ -86,7 +110,8 @@ func _on_sheet_pressed(id: String) -> void:
 	var dead := GameData.is_dead(id)
 	sheet_panel.get_node("Sheet/Portrait").texture = _portrait(id, dead)
 	sheet_panel.get_node("Sheet/Info/VBox/NameLabel").text = "Nombre: " + data["name"]
-	sheet_panel.get_node("Sheet/Info/VBox/AbilityLabel").text = "Habilidad: " + data["ability"]
+	sheet_panel.get_node("Sheet/Info/VBox/AbilityLabel").text = "Habilidad: " + data["ability"] \
+		+ ("" if dead else "\nVidas: %d/%d" % [GameData.get_lives(id), GameData.MAX_LIVES])
 	sheet_panel.get_node("Sheet/Info/VBox/StoryLabel").text = \
 		"Tuvo su oportunidad." if dead else "Breve historia: " + data["story"]
 	sheet_panel.visible = true

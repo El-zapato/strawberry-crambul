@@ -4,15 +4,24 @@ Uso:  python3 tools/generate_pixel_art.py
 
 Los PNG se escriben en assets/sprites/. El equipo puede reemplazar cualquiera
 por su versión de Krita/IbisPaint X manteniendo el mismo nombre y tamaño
-(los personajes son hojas de 6 cuadros de 24x32).
+(los personajes son hojas de 6 cuadros de 48x64; los tiles miden 32x32).
 """
 import math
 import os
 import random
+import shutil
+import tempfile
 
 from PIL import Image
 
-ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "assets", "sprites")
+import characters_hd
+
+DEST = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "assets", "sprites")
+# Todo se dibuja a 1x en una carpeta temporal y al final se escala x2 (vecino
+# más cercano) hacia assets/sprites. El juego corre a 640x360, así que los
+# sprites finales miden el doble (personajes: cuadros de 48x64, tiles: 32x32).
+SCALE = 2
+ROOT = tempfile.mkdtemp(prefix="sprites_1x_")
 OUTLINE = (25, 18, 28, 255)
 
 
@@ -54,111 +63,7 @@ class Canvas:
         return self
 
 
-# --------------------------------------------------------------------------
-# Personajes (vista lateral, mirando a la derecha). Cuadros:
-# 0 quieto, 1 correr A, 2 correr B, 3 salto, 4 planeo (paraguas), 5 muerto
-# --------------------------------------------------------------------------
-PALETTES = {
-    "character1": dict(hair=(92, 52, 30), skin=(240, 190, 150), coat=(240, 200, 60),
-                       coat_dark=(196, 148, 40), pants=(60, 80, 150), shoes=(50, 35, 30),
-                       umbrella=True),
-    "character2": dict(hair=(40, 34, 48), skin=(225, 170, 130), coat=(196, 64, 64),
-                       coat_dark=(140, 42, 48), pants=(50, 90, 70), shoes=(40, 30, 30),
-                       umbrella=False),
-    "character_secret": dict(hair=(214, 112, 40), skin=(245, 200, 160), coat=(80, 150, 90),
-                             coat_dark=(52, 108, 64), pants=(120, 80, 50), shoes=(60, 40, 30),
-                             umbrella=False),
-}
-RED = (200, 40, 50)
-RED_DARK = (140, 25, 35)
-RED_LIGHT = (235, 90, 90)
-EYE = (30, 20, 20)
-BLOOD = (110, 10, 20)
-
-
-def draw_upright(c, p, pose):
-    # cabeza
-    c.rect(8, 9, 15, 16, p["skin"])
-    c.rect(8, 7, 15, 9, p["hair"])
-    c.rect(8, 10, 10, 13, p["hair"])
-    c.px(13, 12, EYE)
-    c.px(13, 13, EYE)
-    c.px(14, 15, (230, 140, 130))
-    # torso
-    c.rect(8, 17, 15, 24, p["coat"])
-    c.rect(8, 17, 8, 24, p["coat_dark"])
-    c.rect(8, 24, 15, 24, p["coat_dark"])
-    # pantalón
-    c.rect(9, 25, 14, 27, p["pants"])
-    # piernas
-    legs = {
-        "idle": [((9, 28, 10, 29), (9, 30, 11, 31)), ((13, 28, 14, 29), (13, 30, 15, 31))],
-        "runA": [((8, 28, 9, 29), (7, 30, 9, 31)), ((14, 28, 15, 29), (14, 30, 16, 31))],
-        "runB": [((10, 28, 13, 29), (10, 30, 14, 31))],
-        "jump": [((9, 28, 10, 29), (8, 30, 10, 30)), ((13, 27, 15, 28), (14, 29, 16, 29))],
-    }[pose if pose != "glide" else "idle"]
-    for leg, shoe in legs:
-        c.rect(*leg, p["pants"])
-        c.rect(*shoe, p["shoes"])
-
-    if pose == "glide":
-        # brazo levantado sujetando el paraguas abierto
-        c.rect(14, 11, 15, 18, p["coat_dark"])
-        c.rect(14, 9, 15, 10, p["skin"])
-        c.rect(14, 4, 14, 8, (70, 50, 40))
-        canopy = [(9, 19), (7, 21), (6, 22), (5, 23)]
-        for i, (x0, x1) in enumerate(canopy):
-            c.rect(x0, 1 + i, x1, 1 + i, RED)
-        for x in range(5, 24, 3):
-            c.px(x, 5, RED_DARK)
-        for x in (9, 14, 19):
-            c.rect(x, 1, x, 4, RED_LIGHT)
-        c.px(14, 0, (70, 50, 40))
-    else:
-        # brazo al costado
-        c.rect(12, 18, 13, 22, p["coat_dark"])
-        c.rect(12, 23, 13, 23, p["skin"])
-        if p["umbrella"]:
-            # paraguas cerrado colgando de la mano
-            c.rect(14, 21, 14, 22, (70, 50, 40))
-            c.rect(14, 23, 15, 28, RED)
-            c.rect(15, 23, 15, 28, RED_DARK)
-            c.px(14, 29, (70, 50, 40))
-
-
-def draw_dead(c, p):
-    # charco de sangre bajo la cabeza
-    c.rect(13, 31, 23, 31, BLOOD)
-    c.rect(16, 30, 22, 30, BLOOD)
-    # acostado boca arriba
-    c.rect(17, 24, 22, 29, p["skin"])
-    c.rect(22, 24, 23, 29, p["hair"])
-    for (x, y) in ((18, 25), (20, 27), (20, 25), (18, 27), (19, 26)):
-        c.px(x, y, EYE)
-    c.rect(7, 25, 16, 29, p["coat"])
-    c.rect(7, 25, 16, 25, p["coat_dark"])
-    c.rect(3, 26, 6, 29, p["pants"])
-    c.rect(0, 26, 2, 29, p["shoes"])
-    if p["umbrella"]:
-        c.rect(3, 31, 11, 31, RED)
-        c.rect(1, 30, 2, 30, (70, 50, 40))
-
-
-def character_sheet(name):
-    p = PALETTES[name]
-    sheet = Image.new("RGBA", (24 * 6, 32), (0, 0, 0, 0))
-    for i, pose in enumerate(["idle", "runA", "runB", "jump", "glide", "dead"]):
-        c = Canvas(24, 32)
-        if pose == "dead":
-            draw_dead(c, p)
-        else:
-            if pose == "glide" and not p["umbrella"]:
-                pose = "jump"
-            draw_upright(c, p, pose)
-        c.outline()
-        sheet.paste(c.img, (24 * i, 0))
-    sheet.save(out(f"characters/{name}.png"))
-
+# Personajes: ver tools/characters_hd.py (se dibujan a 48x64 sin escalar)
 
 # --------------------------------------------------------------------------
 # Tiles 16x16: 0 pasto, 1 tierra, 2 tablón (one-way), 3 tierra oscura
@@ -573,8 +478,24 @@ def ground(img, x0, x1, top):
             img.alpha_composite(tile, (x, y))
 
 
-def frame(name, i):
-    return Image.open(out(f"characters/{name}.png")).crop((i * 24, 0, i * 24 + 24, 32))
+# Los personajes se dibujan a 48x64 (characters_hd.py), así que no se pegan en
+# las escenas a 1x: se anotan aquí y se pegan después de escalar x2
+OVERLAYS = []
+
+
+def overlay(path, name, i, x, bottom, flip=False):
+    OVERLAYS.append((path, name, i, x, bottom, flip))
+
+
+def apply_overlays():
+    for path, name, i, x, bottom, flip in OVERLAYS:
+        dst = os.path.join(DEST, path)
+        img = Image.open(dst).convert("RGBA")
+        f = characters_hd.sheet(name).crop((i * 48, 0, i * 48 + 48, 64))
+        if flip:
+            f = f.transpose(Image.FLIP_LEFT_RIGHT)
+        img.alpha_composite(f, (x * SCALE, bottom * SCALE - 64))
+        img.save(dst)
 
 
 def prop(name):
@@ -611,7 +532,7 @@ def menu_scenes():
     paste_bottom(img, prop("tree.png"), 92, 148)
     paste_bottom(img, prop("fence.png"), 150, 148)
     paste_bottom(img, prop("bush.png"), 120, 148)
-    paste_bottom(img, frame("character1", 0), 70, 148)
+    overlay("ui/menu_scene.png", "character1", 0, 70, 148)
     ground(img, 256, 320, 124)
     paste_bottom(img, prop("bridge_post.png"), 200, 148 + 32)
     paste_bottom(img, prop("bridge_post.png"), 250, 124 + 32, flip=True)
@@ -624,7 +545,7 @@ def menu_scenes():
     paste_bottom(img, prop("bridge_post.png"), 224, 140 + 32)
     paste_bottom(img, prop("tree.png"), 14, 140)
     for i, n in enumerate(("character1", "character2", "character_secret")):
-        paste_bottom(img, frame(n, 5), 70 + i * 44, 140)
+        overlay("ui/bad_ending_scene.png", n, 5, 70 + i * 44, 140)
     img.save(out("ui/bad_ending_scene.png"))
 
     # Final verdadero: el puente reconstruido y la casa de la carpintera
@@ -642,19 +563,30 @@ def menu_scenes():
         sag = int(6 * math.sin(math.pi * max(0, min(80, x - 144)) / 80))
         img.putpixel((x, 128 + sag), (200, 180, 130, 255))
     paste_bottom(img, prop("house.png"), 250, 140)
-    paste_bottom(img, frame("character_secret", 0), 226, 140, flip=True)
-    paste_bottom(img, frame("character1", 0), 200, 142 + int(6 * math.sin(math.pi * 56 / 80)))
+    overlay("ui/true_ending_scene.png", "character_secret", 0, 226, 140, flip=True)
+    overlay("ui/true_ending_scene.png", "character1", 0, 200, 142 + int(6 * math.sin(math.pi * 56 / 80)))
     paste_bottom(img, prop("tree.png"), 20, 140)
     img.save(out("ui/true_ending_scene.png"))
 
 
 if __name__ == "__main__":
-    for n in PALETTES:
-        character_sheet(n)
+    # Personajes: dibujados directo al tamaño final (no se escalan)
+    for n in characters_hd.CHARACTERS:
+        os.makedirs(os.path.join(DEST, "characters"), exist_ok=True)
+        characters_hd.sheet(n).save(os.path.join(DEST, "characters", f"{n}.png"))
     tiles()
     props()
     ui()
     backgrounds()
     menu_ui()
     menu_scenes()
-    print("Sprites generados en", os.path.normpath(ROOT))
+    for folder, _, files in os.walk(ROOT):
+        for f in files:
+            src = os.path.join(folder, f)
+            dst = os.path.join(DEST, os.path.relpath(src, ROOT))
+            os.makedirs(os.path.dirname(dst), exist_ok=True)
+            im = Image.open(src)
+            im.resize((im.width * SCALE, im.height * SCALE), Image.NEAREST).save(dst)
+    shutil.rmtree(ROOT)
+    apply_overlays()
+    print("Sprites generados en", os.path.normpath(DEST))

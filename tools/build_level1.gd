@@ -8,7 +8,7 @@ extends SceneTree
 # de Godot (pintar tiles en el nodo Ground, mover trampas, letreros, etc.).
 # OJO: volver a correr este script sobrescribe esos cambios.
 
-const T := 16
+const T := 32
 const W := 150
 const H := 20
 
@@ -117,8 +117,10 @@ func _build_tileset() -> TileSet:
 	src.texture = load("res://assets/sprites/tiles/level1_tiles.png")
 	src.texture_region_size = Vector2i(T, T)
 	ts.add_source(src, 0)
-	var full := PackedVector2Array([Vector2(-8, -8), Vector2(8, -8), Vector2(8, 8), Vector2(-8, 8)])
-	var thin := PackedVector2Array([Vector2(-8, -8), Vector2(8, -8), Vector2(8, -3), Vector2(-8, -3)])
+	var h := T / 2.0
+	var full := PackedVector2Array([Vector2(-h, -h), Vector2(h, -h), Vector2(h, h), Vector2(-h, h)])
+	# el tablón solo tiene colisión en su parte de arriba
+	var thin := PackedVector2Array([Vector2(-h, -h), Vector2(h, -h), Vector2(h, -h * 0.4), Vector2(-h, -h * 0.4)])
 	for coords in [TILE_GRASS, TILE_DIRT, TILE_PLANK, TILE_DIRT_DARK]:
 		src.create_tile(coords)
 		var td := src.get_tile_data(coords, 0)
@@ -201,7 +203,7 @@ func _build_background() -> void:
 		var p := Parallax2D.new()
 		p.name = l[0]
 		p.scroll_scale = Vector2(l[2], 0.0)
-		p.repeat_size = Vector2(320, 0)
+		p.repeat_size = Vector2(640, 0)
 		p.repeat_times = 3
 		p.autoscroll = Vector2(l[3], 0)
 		p.z_index = -9
@@ -246,10 +248,10 @@ func _build_far_side() -> void:
 	var far := Node2D.new()
 	far.name = "CarpenterHill"
 	_add(level, far)
-	_sprite(far, "House", "house.png", Vector2(139 * T, 7 * T - 48))
+	_sprite(far, "House", "house.png", Vector2(139 * T, 7 * T - 3 * T))
 	# Postes del puente: la cuerda rota cuelga hacia el precipicio
-	_sprite(far, "BridgePostLeft", "bridge_post.png", Vector2(119 * T - 8, 6 * T - 24))
-	_sprite(far, "BridgePostRight", "bridge_post.png", Vector2(135 * T - 6, 7 * T - 24), true)
+	_sprite(far, "BridgePostLeft", "bridge_post.png", Vector2(119 * T - T / 2, 6 * T - 1.5 * T))
+	_sprite(far, "BridgePostRight", "bridge_post.png", Vector2(135 * T - 0.375 * T, 7 * T - 1.5 * T), true)
 
 # --------------------------------------------------------------------------
 func _build_entities() -> void:

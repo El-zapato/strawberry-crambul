@@ -31,15 +31,17 @@ strawberry_crambul/
 | Saltar        | Espacio         |
 | Planear       | Mantener Espacio en el aire (Personaje 1) |
 | Disparar      | Click izquierdo (Personaje 2) |
+| Pausa         | Esc (Continuar / Salir al menú) |
 
 ## Mecánicas principales
 
 - **Muerte permanente**: morir guarda el estado en disco (`user://save.json`). El personaje no vuelve a estar disponible.
+- **Corazones por intento**: cada personaje tiene 3 corazones para todo su intento. Se guardan en el momento en que se pierde uno, así que salir al menú o cerrar el juego **no los devuelve**; al volver se empieza desde el inicio del nivel con los que quedaban. La tarjeta de selección muestra cuántos le quedan.
 - **Fantasmas**: si un personaje muere, aparece como enemigo semitransparente en el nivel del otro personaje.
 - **Personaje secreto**: se desbloquea recogiendo todos los coleccionables ocultos.
 - **Final Malo**: se activa cuando todos los personajes están muertos.
 - **Final Verdadero**: requiere todos los coleccionables + completar el juego con el personaje secreto.
-- **Nueva partida**: botón oculto en el menú principal (esquina inferior izquierda).
+- **Nueva partida**: aparece en la esquina inferior izquierda del menú (y en el Final Malo) cuando todos los personajes han muerto. Reinicia muertes, corazones y coleccionables.
 
 ## Fases de desarrollo
 
@@ -99,7 +101,32 @@ el mismo nombre. Si se cambia un archivo de música, en su `.import` debe quedar
 
 ## Assets pendientes
 
-Los sprites son **placeholders** pixel art generados por `tools/generate_pixel_art.py` — el equipo los reemplaza (mismo nombre y tamaño; los personajes son hojas de 6 cuadros de 24×32: quieto, correr A, correr B, salto, planeo, muerto) con sus diseños de Krita/IbisPaint X.  
+Los sprites son **placeholders** pixel art generados por `tools/generate_pixel_art.py` — el equipo los reemplaza (mismo nombre y tamaño; los personajes son hojas de 6 cuadros de 48×64: quieto, correr A, correr B, salto, planeo, muerto) con sus diseños de Krita/IbisPaint X.
+
+### Tamaños para dibujar
+
+El juego corre a **640×360** y se escala por múltiplos enteros a la ventana
+(1280×720 por defecto), así que cada píxel del sprite se ve nítido.
+
+| Qué | Tamaño del PNG |
+|---|---|
+| Personaje (hoja de 6 cuadros) | 288×64 (cada cuadro 48×64; el personaje ocupa ~32×48, con los pies en la parte de abajo) |
+| Tiles del piso (`level1_tiles.png`) | 128×32 (4 tiles de 32×32: pasto, tierra, tablón, tierra oscura) |
+| Pinchos | 32×32 |
+| Fondos (cielo, nubes, colinas) | 640×360, se repiten a lo ancho |
+
+**Plantilla:** en `docs/arte/` está `plantilla_personaje.png` (288×64, tamaño real
+para dibujar encima en una capa nueva), `plantilla_personaje_guia.png` (la misma
+a 4× con la explicación de cada guía) y `referencia_personajes.png` (los sprites
+actuales en grande). Se regeneran con `python3 tools/generate_art_template.py`.
+
+Los sprites actuales de los personajes (`tools/characters_hd.py`) se basan en los
+bocetos de la propuesta: el Personaje 1 con pelo largo, blusa de manga abombada,
+falda larga, carta y paraguas; el Personaje 2 con chongo y mangas anchas.
+
+Consejo: dibujar a ese tamaño exacto en Krita con un pincel de píxel, o dibujar
+más grande y reducir con *vecino más cercano* para que no se vea borroso. Usar
+siempre PNG con transparencia.  
 Carpetas de destino:
 - `assets/sprites/characters/` — sprites de personajes y versiones muertas
 - `assets/sprites/enemies/` — sprites de fantasmas

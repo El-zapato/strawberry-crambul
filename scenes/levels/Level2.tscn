@@ -30,6 +30,13 @@ collectible_scene = ExtResource("4_col")
 position = Vector2(80, 90)
 projectile_scene = ExtResource("6_proj")
 
+[node name="Camera2D" type="Camera2D" parent="Character2"]
+zoom = Vector2(2, 2)
+limit_left = 0
+limit_top = 0
+limit_right = 720
+limit_bottom = 180
+
 [node name="BgRect" type="ColorRect" parent="."]
 z_index = -10
 offset_left = 0.0

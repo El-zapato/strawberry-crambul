@@ -31,17 +31,17 @@ func _ready() -> void:
 	var sheet: Texture2D = load(SHEETS.get(who, SHEETS["character1"]))
 	var tex := AtlasTexture.new()
 	tex.atlas = sheet
-	tex.region = Rect2(0, 0, 24, 32)
+	tex.region = Rect2(0, 0, 48, 64)
 	body.texture = tex
 
 	# Jumpscare: la cara aparece enorme, roja y temblando
-	# Centrado en la cara (filas 7-16 del cuadro de 32)
+	# Centrado en la cara (filas 14-32 del cuadro de 64)
 	body.pivot_offset = Vector2(body.size.x / 2, body.size.y * 0.36)
 	body.modulate = Color(1, 0.25, 0.25)
 	body.scale = Vector2(3, 3)
 	var tween := create_tween()
 	for i in 8:
-		tween.tween_property(body, "position:x", body.position.x + (6 if i % 2 == 0 else -6), 0.04)
+		tween.tween_property(body, "position:x", body.position.x + (12 if i % 2 == 0 else -12), 0.04)
 	tween.tween_property(body, "position:x", body.position.x, 0.04)
 	tween.tween_callback(_show_body.bind(tex))
 
@@ -49,7 +49,7 @@ func _ready() -> void:
 
 func _show_body(tex: AtlasTexture) -> void:
 	# El cuerpo queda tirado en el suelo
-	tex.region = Rect2(5 * 24, 0, 24, 32)
+	tex.region = Rect2(5 * 48, 0, 48, 64)
 	body.scale = Vector2.ONE
 	body.modulate = Color(1, 1, 1)
 	label.visible = true

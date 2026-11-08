@@ -18,28 +18,28 @@ layout_mode = 0
 [node name="Scene" type="TextureRect" parent="."]
 modulate = Color(0.75, 0.4, 0.45, 1)
 layout_mode = 0
-offset_right = 320.0
-offset_bottom = 180.0
+offset_right = 640.0
+offset_bottom = 360.0
 mouse_filter = 2
 texture = ExtResource("3_scene")
 
 [node name="Panel" type="PanelContainer" parent="."]
 layout_mode = 0
-offset_left = 40.0
-offset_top = 8.0
-offset_right = 280.0
-offset_bottom = 84.0
+offset_left = 80.0
+offset_top = 16.0
+offset_right = 560.0
+offset_bottom = 168.0
 
 [node name="VBox" type="VBoxContainer" parent="Panel"]
 layout_mode = 2
-theme_override_constants/separation = 4
+theme_override_constants/separation = 8
 
 [node name="TitleLabel" type="Label" parent="Panel/VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.95, 0.2, 0.25, 1)
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 24
 theme_override_colors/font_outline_color = Color(0.45, 0.12, 0.28, 1)
-theme_override_constants/outline_size = 2
+theme_override_constants/outline_size = 4
 text = "FINAL MALO"
 horizontal_alignment = 1
 
@@ -52,18 +52,18 @@ autowrap_mode = 3
 
 [node name="NewGameButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 58.0
-offset_top = 152.0
-offset_right = 154.0
-offset_bottom = 170.0
+offset_left = 116.0
+offset_top = 304.0
+offset_right = 308.0
+offset_bottom = 340.0
 text = "Nueva partida"
 
 [node name="BackButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 166.0
-offset_top = 152.0
-offset_right = 262.0
-offset_bottom = 170.0
+offset_left = 332.0
+offset_top = 304.0
+offset_right = 524.0
+offset_bottom = 340.0
 text = "Menú Principal"
 
 [connection signal="pressed" from="NewGameButton" to="." method="_on_new_game_button_pressed"]
