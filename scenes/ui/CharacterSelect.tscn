@@ -1,40 +1,43 @@
-[gd_scene load_steps=6 format=3 uid="uid://character_select"]
+[gd_scene format=3 uid="uid://dkfn8jw41iyc3"]
 
-[ext_resource type="Script" path="res://scripts/CharacterSelect.gd" id="1_cs"]
+[ext_resource type="Script" uid="uid://dqnilism00bi4" path="res://scripts/CharacterSelect.gd" id="1_cs"]
 [ext_resource type="PackedScene" path="res://scenes/ui/MenuBackground.tscn" id="2_bg"]
-[ext_resource type="Texture2D" path="res://assets/sprites/ui/menu_scene.png" id="3_scene"]
-[ext_resource type="Texture2D" path="res://assets/sprites/ui/card.png" id="4_card"]
+[ext_resource type="Texture2D" uid="uid://cfaetwdx4wuvf" path="res://assets/sprites/ui/menu_scene.png" id="3_scene"]
+[ext_resource type="Texture2D" uid="uid://ctt8q2uy1s31a" path="res://assets/sprites/ui/card.png" id="4_card"]
+[ext_resource type="Texture2D" uid="uid://b845s8dip5qc" path="res://assets/sprites/characters/marco.png" id="5_hjnfi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_info"]
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
 bg_color = Color(0.99, 0.84, 0.89, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0.96, 0.59, 0.71, 1)
-content_margin_left = 12.0
-content_margin_top = 12.0
-content_margin_right = 12.0
-content_margin_bottom = 12.0
 
-[node name="CharacterSelect" type="Control"]
+[node name="CharacterSelect" type="Control" unique_id=854959309]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_cs")
 
-[node name="MenuBackground" parent="." instance=ExtResource("2_bg")]
+[node name="MenuBackground" parent="." unique_id=1202113486 instance=ExtResource("2_bg")]
 layout_mode = 0
 
-[node name="Scene" type="TextureRect" parent="."]
+[node name="Scene" type="TextureRect" parent="." unique_id=1316610326]
 layout_mode = 0
 offset_right = 640.0
 offset_bottom = 360.0
 mouse_filter = 2
 texture = ExtResource("3_scene")
 
-[node name="TitleLabel" type="Label" parent="."]
+[node name="TitleLabel" type="Label" parent="." unique_id=1613042711]
 layout_mode = 0
 offset_top = 12.0
 offset_right = 640.0
@@ -46,7 +49,7 @@ theme_override_font_sizes/font_size = 20
 text = "¿Quién entregará la carta?"
 horizontal_alignment = 1
 
-[node name="Cards" type="HBoxContainer" parent="."]
+[node name="Cards" type="HBoxContainer" parent="." unique_id=1852139861]
 layout_mode = 0
 offset_left = 8.0
 offset_top = 48.0
@@ -55,18 +58,80 @@ offset_bottom = 264.0
 theme_override_constants/separation = 8
 alignment = 1
 
-[node name="Card1" type="Control" parent="Cards"]
+[node name="Card1" type="Control" parent="Cards" unique_id=356262223]
 custom_minimum_size = Vector2(116, 216)
 layout_mode = 2
 
-[node name="Bg" type="TextureRect" parent="Cards/Card1"]
+[node name="Bg" type="TextureRect" parent="Cards/Card1" unique_id=1833008387]
 layout_mode = 0
 offset_right = 116.0
 offset_bottom = 216.0
 mouse_filter = 2
 texture = ExtResource("4_card")
 
-[node name="Portrait" type="TextureRect" parent="Cards/Card1"]
+[node name="Portrait" type="TextureRect" parent="Cards/Card1" unique_id=1606413224]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 12.0
+offset_right = 106.0
+offset_bottom = 140.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="DeadOverlay" type="TextureRect" parent="Cards/Card1/Portrait" unique_id=991820342]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1752.0
+offset_top = -1075.0
+offset_right = 833.0
+offset_bottom = 845.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_hjnfi")
+
+[node name="NameLabel" type="Label" parent="Cards/Card1" unique_id=614754981]
+layout_mode = 0
+offset_top = 142.0
+offset_right = 116.0
+offset_bottom = 162.0
+theme_override_colors/font_color = Color(0.45, 0.12, 0.28, 1)
+theme_override_font_sizes/font_size = 14
+horizontal_alignment = 1
+
+[node name="PlayButton" type="Button" parent="Cards/Card1" unique_id=1312190068]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 164.0
+offset_right = 98.0
+offset_bottom = 186.0
+theme_type_variation = &"PillButton"
+text = "Jugar"
+
+[node name="SheetButton" type="Button" parent="Cards/Card1" unique_id=625352904]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 190.0
+offset_right = 98.0
+offset_bottom = 212.0
+theme_type_variation = &"PillButton"
+text = "Hoja"
+
+[node name="Card2" type="Control" parent="Cards" unique_id=249465168]
+custom_minimum_size = Vector2(116, 216)
+layout_mode = 2
+
+[node name="Bg" type="TextureRect" parent="Cards/Card2" unique_id=455289653]
+layout_mode = 0
+offset_right = 116.0
+offset_bottom = 216.0
+mouse_filter = 2
+texture = ExtResource("4_card")
+
+[node name="Portrait" type="TextureRect" parent="Cards/Card2" unique_id=2089582203]
 layout_mode = 0
 offset_left = 10.0
 offset_top = 12.0
@@ -76,7 +141,7 @@ mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="NameLabel" type="Label" parent="Cards/Card1"]
+[node name="NameLabel" type="Label" parent="Cards/Card2" unique_id=1094054987]
 layout_mode = 0
 offset_top = 142.0
 offset_right = 116.0
@@ -85,7 +150,7 @@ theme_override_colors/font_color = Color(0.45, 0.12, 0.28, 1)
 theme_override_font_sizes/font_size = 14
 horizontal_alignment = 1
 
-[node name="PlayButton" type="Button" parent="Cards/Card1"]
+[node name="PlayButton" type="Button" parent="Cards/Card2" unique_id=1082348285]
 layout_mode = 0
 offset_left = 18.0
 offset_top = 164.0
@@ -94,7 +159,7 @@ offset_bottom = 186.0
 theme_type_variation = &"PillButton"
 text = "Jugar"
 
-[node name="SheetButton" type="Button" parent="Cards/Card1"]
+[node name="SheetButton" type="Button" parent="Cards/Card2" unique_id=1173012898]
 layout_mode = 0
 offset_left = 18.0
 offset_top = 190.0
@@ -103,66 +168,18 @@ offset_bottom = 212.0
 theme_type_variation = &"PillButton"
 text = "Hoja"
 
-[node name="Card2" type="Control" parent="Cards"]
+[node name="Card3" type="Control" parent="Cards" unique_id=310086339]
 custom_minimum_size = Vector2(116, 216)
 layout_mode = 2
 
-[node name="Bg" type="TextureRect" parent="Cards/Card2"]
+[node name="Bg" type="TextureRect" parent="Cards/Card3" unique_id=1204644336]
 layout_mode = 0
 offset_right = 116.0
 offset_bottom = 216.0
 mouse_filter = 2
 texture = ExtResource("4_card")
 
-[node name="Portrait" type="TextureRect" parent="Cards/Card2"]
-layout_mode = 0
-offset_left = 10.0
-offset_top = 12.0
-offset_right = 106.0
-offset_bottom = 140.0
-mouse_filter = 2
-expand_mode = 1
-stretch_mode = 5
-
-[node name="NameLabel" type="Label" parent="Cards/Card2"]
-layout_mode = 0
-offset_top = 142.0
-offset_right = 116.0
-offset_bottom = 162.0
-theme_override_colors/font_color = Color(0.45, 0.12, 0.28, 1)
-theme_override_font_sizes/font_size = 14
-horizontal_alignment = 1
-
-[node name="PlayButton" type="Button" parent="Cards/Card2"]
-layout_mode = 0
-offset_left = 18.0
-offset_top = 164.0
-offset_right = 98.0
-offset_bottom = 186.0
-theme_type_variation = &"PillButton"
-text = "Jugar"
-
-[node name="SheetButton" type="Button" parent="Cards/Card2"]
-layout_mode = 0
-offset_left = 18.0
-offset_top = 190.0
-offset_right = 98.0
-offset_bottom = 212.0
-theme_type_variation = &"PillButton"
-text = "Hoja"
-
-[node name="Card3" type="Control" parent="Cards"]
-custom_minimum_size = Vector2(116, 216)
-layout_mode = 2
-
-[node name="Bg" type="TextureRect" parent="Cards/Card3"]
-layout_mode = 0
-offset_right = 116.0
-offset_bottom = 216.0
-mouse_filter = 2
-texture = ExtResource("4_card")
-
-[node name="PendingLabel" type="Label" parent="Cards/Card3"]
+[node name="PendingLabel" type="Label" parent="Cards/Card3" unique_id=1990968113]
 layout_mode = 0
 offset_left = 10.0
 offset_top = 12.0
@@ -174,18 +191,18 @@ definir."
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Card4" type="Control" parent="Cards"]
+[node name="Card4" type="Control" parent="Cards" unique_id=531789456]
 custom_minimum_size = Vector2(116, 216)
 layout_mode = 2
 
-[node name="Bg" type="TextureRect" parent="Cards/Card4"]
+[node name="Bg" type="TextureRect" parent="Cards/Card4" unique_id=317566956]
 layout_mode = 0
 offset_right = 116.0
 offset_bottom = 216.0
 mouse_filter = 2
 texture = ExtResource("4_card")
 
-[node name="PendingLabel" type="Label" parent="Cards/Card4"]
+[node name="PendingLabel" type="Label" parent="Cards/Card4" unique_id=588810406]
 layout_mode = 0
 offset_left = 10.0
 offset_top = 12.0
@@ -197,18 +214,18 @@ definir."
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Card5" type="Control" parent="Cards"]
+[node name="Card5" type="Control" parent="Cards" unique_id=344541661]
 custom_minimum_size = Vector2(116, 216)
 layout_mode = 2
 
-[node name="Bg" type="TextureRect" parent="Cards/Card5"]
+[node name="Bg" type="TextureRect" parent="Cards/Card5" unique_id=1326222372]
 layout_mode = 0
 offset_right = 116.0
 offset_bottom = 216.0
 mouse_filter = 2
 texture = ExtResource("4_card")
 
-[node name="Portrait" type="TextureRect" parent="Cards/Card5"]
+[node name="Portrait" type="TextureRect" parent="Cards/Card5" unique_id=495570864]
 layout_mode = 0
 offset_left = 10.0
 offset_top = 12.0
@@ -218,7 +235,7 @@ mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="NameLabel" type="Label" parent="Cards/Card5"]
+[node name="NameLabel" type="Label" parent="Cards/Card5" unique_id=1459869740]
 layout_mode = 0
 offset_top = 142.0
 offset_right = 116.0
@@ -227,7 +244,7 @@ theme_override_colors/font_color = Color(0.45, 0.12, 0.28, 1)
 theme_override_font_sizes/font_size = 14
 horizontal_alignment = 1
 
-[node name="PlayButton" type="Button" parent="Cards/Card5"]
+[node name="PlayButton" type="Button" parent="Cards/Card5" unique_id=1665242138]
 layout_mode = 0
 offset_left = 18.0
 offset_top = 164.0
@@ -236,7 +253,7 @@ offset_bottom = 186.0
 theme_type_variation = &"PillButton"
 text = "Jugar"
 
-[node name="SheetButton" type="Button" parent="Cards/Card5"]
+[node name="SheetButton" type="Button" parent="Cards/Card5" unique_id=230251967]
 layout_mode = 0
 offset_left = 18.0
 offset_top = 190.0
@@ -245,7 +262,7 @@ offset_bottom = 212.0
 theme_type_variation = &"PillButton"
 text = "Hoja"
 
-[node name="StatusLabel" type="Label" parent="."]
+[node name="StatusLabel" type="Label" parent="." unique_id=98875463]
 layout_mode = 0
 offset_top = 268.0
 offset_right = 640.0
@@ -256,7 +273,7 @@ theme_override_constants/outline_size = 6
 text = "Fresas encontradas: 0/2"
 horizontal_alignment = 1
 
-[node name="BackButton" type="Button" parent="."]
+[node name="BackButton" type="Button" parent="." unique_id=266007853]
 layout_mode = 0
 offset_left = 252.0
 offset_top = 300.0
@@ -264,67 +281,66 @@ offset_right = 388.0
 offset_bottom = 336.0
 text = "← Volver"
 
-[node name="SheetPanel" type="Control" parent="."]
-visible = false
-layout_mode = 0
+[node name="SheetPanel" type="Control" parent="." unique_id=888209296]
+anchors_preset = 0
 offset_right = 640.0
 offset_bottom = 360.0
 
-[node name="Dim" type="ColorRect" parent="SheetPanel"]
+[node name="Dim" type="ColorRect" parent="SheetPanel" unique_id=1511305397]
 layout_mode = 0
 offset_right = 640.0
 offset_bottom = 360.0
 color = Color(0.2, 0.05, 0.15, 0.45)
 
-[node name="Sheet" type="PanelContainer" parent="SheetPanel"]
+[node name="Sheet" type="PanelContainer" parent="SheetPanel" unique_id=216333602]
 layout_mode = 0
 offset_left = 48.0
 offset_top = 40.0
 offset_right = 592.0
 offset_bottom = 320.0
 
-[node name="Portrait" type="TextureRect" parent="SheetPanel/Sheet"]
+[node name="Portrait" type="TextureRect" parent="SheetPanel/Sheet" unique_id=2107441968]
+custom_minimum_size = Vector2(144, 192)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-custom_minimum_size = Vector2(144, 192)
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Info" type="PanelContainer" parent="SheetPanel/Sheet"]
+[node name="Info" type="PanelContainer" parent="SheetPanel/Sheet" unique_id=1970769799]
+custom_minimum_size = Vector2(340, 208)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
-custom_minimum_size = Vector2(340, 208)
 theme_override_styles/panel = SubResource("StyleBox_info")
 
-[node name="VBox" type="VBoxContainer" parent="SheetPanel/Sheet/Info"]
+[node name="VBox" type="VBoxContainer" parent="SheetPanel/Sheet/Info" unique_id=616466177]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="NameLabel" type="Label" parent="SheetPanel/Sheet/Info/VBox"]
+[node name="NameLabel" type="Label" parent="SheetPanel/Sheet/Info/VBox" unique_id=190916437]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.45, 0.12, 0.28, 1)
 text = "Nombre"
 autowrap_mode = 3
 
-[node name="AbilityLabel" type="Label" parent="SheetPanel/Sheet/Info/VBox"]
+[node name="AbilityLabel" type="Label" parent="SheetPanel/Sheet/Info/VBox" unique_id=1937781952]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.45, 0.12, 0.28, 1)
 text = "Habilidad"
 autowrap_mode = 3
 
-[node name="StoryLabel" type="Label" parent="SheetPanel/Sheet/Info/VBox"]
+[node name="StoryLabel" type="Label" parent="SheetPanel/Sheet/Info/VBox" unique_id=667199661]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.45, 0.12, 0.28, 1)
 text = "Breve historia"
 autowrap_mode = 3
 
-[node name="CloseButton" type="Button" parent="SheetPanel/Sheet"]
+[node name="CloseButton" type="Button" parent="SheetPanel/Sheet" unique_id=1234955244]
+custom_minimum_size = Vector2(120, 24)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
-custom_minimum_size = Vector2(120, 24)
 theme_type_variation = &"PillButton"
 text = "Volver"
 

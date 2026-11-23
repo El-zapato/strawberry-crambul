@@ -11,6 +11,7 @@ var secret_unlocked: bool = false
 # Vidas que le quedan a cada personaje en su intento. Se guardan en disco
 # para que salir al menú o cerrar el juego no devuelva los corazones.
 var lives: Dictionary = {}
+var intro_vista: bool = false
 
 func _ready() -> void:
 	load_game()
@@ -55,6 +56,7 @@ func new_game() -> void:
 	found_collectibles.clear()
 	secret_unlocked = false
 	lives.clear()
+	intro_vista = false
 	save_game()
 
 func save_game() -> void:
@@ -63,6 +65,7 @@ func save_game() -> void:
 		"found_collectibles": found_collectibles,
 		"secret_unlocked": secret_unlocked,
 		"lives": lives,
+		"intro_vista": intro_vista,
 	}
 	var file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	if file:
@@ -85,3 +88,4 @@ func load_game() -> void:
 	found_collectibles.assign(parsed.get("found_collectibles", []))
 	secret_unlocked = parsed.get("secret_unlocked", false)
 	lives = parsed.get("lives", {})
+	intro_vista = parsed.get("intro_vista", false)

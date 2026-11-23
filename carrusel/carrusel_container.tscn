@@ -4,3 +4,45 @@
 
 [node name="CarruselContainer" type="Node2D" unique_id=405448208]
 script = ExtResource("1_dwibm")
+
+[node name="CarouselContainer" type="Node2D" parent="." unique_id=1829557882 node_paths=PackedStringArray("position_offset_node")]
+script = ExtResource("1_dwibm")
+position_offset_node = NodePath("Control")
+metadata/_custom_type_script = "uid://ceb6pm6nlgn7b"
+
+[node name="Control" type="Control" parent="CarouselContainer" unique_id=988168082]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+
+[node name="Panel2" type="Panel" parent="CarouselContainer/Control" unique_id=1710678734]
+z_index = 1
+layout_mode = 0
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+pivot_offset = Vector2(20, 20)
+
+[node name="Panel" type="Panel" parent="CarouselContainer/Control" unique_id=773976596]
+modulate = Color(1, 1, 1, 0.65)
+z_index = -1
+layout_mode = 0
+offset_left = 60.0
+offset_top = -20.0
+offset_right = 100.0
+offset_bottom = 20.0
+scale = Vector2(0.75, 0.75)
+pivot_offset = Vector2(20, 20)
+
+[node name="Panel3" type="Panel" parent="CarouselContainer/Control" unique_id=2066140173]
+modulate = Color(1, 1, 1, 0.3)
+z_index = -2
+layout_mode = 0
+offset_left = 120.0
+offset_top = -20.0
+offset_right = 160.0
+offset_bottom = 20.0
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(20, 20)

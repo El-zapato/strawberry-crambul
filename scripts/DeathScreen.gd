@@ -3,9 +3,18 @@ extends Control
 # luego su cuerpo, flash rojo + texto y vuelta al menú
 
 const SHEETS := {
-	"character1": "res://assets/sprites/characters/character1.png",
-	"character2": "res://assets/sprites/characters/character2.png",
-	"secret": "res://assets/sprites/characters/character_secret.png",
+	"character1": {
+		"body": "res://assets/sprites/characters/murio.png",
+		"face": "res://assets/sprites/characters/morido.jpeg"
+	},
+	"character2": {
+		"body": "res://assets/sprites/characters/murio.png",
+		"face": "res://assets/sprites/characters/morido.jpeg"
+	},
+	"secret": {
+		"body": "res://assets/sprites/characters/murio.png",
+		"face": "res://assets/sprites/characters/morido.jpeg"
+	},
 }
 
 @onready var flash: ColorRect = $Flash
@@ -23,36 +32,38 @@ func _ready() -> void:
 		"secret":
 			label.text = "La Carpintera ha muerto.\nNo volverá."
 		_:
+			who = "character1"
 			label.text = "Has muerto.\nNo volverás."
+			
 	label.visible = false
 	AudioManager.stop_music(0.1)
 	AudioManager.play_sfx("jumpscare")
-
-	var sheet: Texture2D = load(SHEETS.get(who, SHEETS["character1"]))
-	var tex := AtlasTexture.new()
-	tex.atlas = sheet
-	tex.region = Rect2(0, 0, 48, 64)
-	body.texture = tex
+	
+	var data: Dictionary = SHEETS[who]
+	
+	body.texture = load(data["face"])
 
 	# Jumpscare: la cara aparece enorme, roja y temblando
 	# Centrado en la cara (filas 14-32 del cuadro de 64)
 	body.pivot_offset = Vector2(body.size.x / 2, body.size.y * 0.36)
 	body.modulate = Color(1, 0.25, 0.25)
 	body.scale = Vector2(3, 3)
+	
 	var tween := create_tween()
 	for i in 8:
 		tween.tween_property(body, "position:x", body.position.x + (12 if i % 2 == 0 else -12), 0.04)
 	tween.tween_property(body, "position:x", body.position.x, 0.04)
-	tween.tween_callback(_show_body.bind(tex))
+	tween.tween_callback(_show_body.bind(data["body"]))
 
 	timer.start(3.5)
 
-func _show_body(tex: AtlasTexture) -> void:
+func _show_body(body_img_path: String) -> void:
 	# El cuerpo queda tirado en el suelo
-	tex.region = Rect2(5 * 48, 0, 48, 64)
+	body.texture = load(body_img_path) # Cargamos el dibujo del cuerpo
 	body.scale = Vector2.ONE
 	body.modulate = Color(1, 1, 1)
 	label.visible = true
+	
 	var tween := create_tween()
 	tween.tween_property(flash, "color", Color(0.6, 0, 0, 0.0), 1.5) \
 		.from(Color(1, 0, 0, 0.85))

@@ -1,0 +1,176 @@
+[gd_scene format=3 uid="uid://o64parn8qy54"]
+
+[ext_resource type="Script" uid="uid://cbspfbthct2x1" path="res://scripts/MainMenu.gd" id="1_mainmenu"]
+[ext_resource type="PackedScene" path="res://scenes/ui/MenuBackground.tscn" id="2_bg"]
+[ext_resource type="Texture2D" uid="uid://cfaetwdx4wuvf" path="res://assets/sprites/ui/menu_scene.png" id="3_scene"]
+[ext_resource type="Texture2D" uid="uid://lwyayf22wkk" path="res://assets/sprites/ui/title.png" id="4_title"]
+
+[sub_resource type="Animation" id="Animation_2ysvc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_xpiny"]
+resource_name = "fade"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bhu4a"]
+_data = {
+&"RESET": SubResource("Animation_2ysvc"),
+&"fade": SubResource("Animation_xpiny")
+}
+
+[node name="MainMenu" type="Control" unique_id=1326652296]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mainmenu")
+
+[node name="MenuBackground" parent="." unique_id=808107060 instance=ExtResource("2_bg")]
+layout_mode = 0
+
+[node name="Scene" type="TextureRect" parent="." unique_id=1667080010]
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 360.0
+mouse_filter = 2
+texture = ExtResource("3_scene")
+
+[node name="Title" type="TextureRect" parent="." unique_id=330060093]
+layout_mode = 0
+offset_left = 141.0
+offset_top = 63.0
+offset_right = 521.0
+offset_bottom = 179.0
+mouse_filter = 2
+texture = ExtResource("4_title")
+
+[node name="Letter" type="TextureRect" parent="." unique_id=1040663145]
+layout_mode = 0
+offset_left = 197.0
+offset_top = 190.0
+offset_right = 448.0
+offset_bottom = 319.0
+
+[node name="VBox" type="VBoxContainer" parent="Letter" unique_id=425828387]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 23.0
+offset_right = 222.0
+offset_bottom = 118.0
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="PlayButton" type="Button" parent="Letter/VBox" unique_id=1204954988]
+layout_mode = 2
+theme_type_variation = &"LetterButton"
+text = "Iniciar"
+
+[node name="OptionsButton" type="Button" parent="Letter/VBox" unique_id=70239159]
+layout_mode = 2
+theme_type_variation = &"LetterButton"
+text = "Opciones"
+
+[node name="QuitButton" type="Button" parent="Letter/VBox" unique_id=1157609583]
+layout_mode = 2
+theme_type_variation = &"LetterButton"
+text = "Salir"
+
+[node name="OptionsPanel" type="PanelContainer" parent="." unique_id=1765005367]
+visible = false
+layout_mode = 0
+offset_left = 200.0
+offset_top = 124.0
+offset_right = 440.0
+offset_bottom = 296.0
+
+[node name="VBox" type="VBoxContainer" parent="OptionsPanel" unique_id=379560460]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="OptionsPanel/VBox" unique_id=194584206]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.84, 0.38, 0.55, 1)
+theme_override_font_sizes/font_size = 20
+text = "Opciones"
+horizontal_alignment = 1
+
+[node name="MusicButton" type="Button" parent="OptionsPanel/VBox" unique_id=1149992844]
+layout_mode = 2
+text = "Música: Sí"
+
+[node name="SfxButton" type="Button" parent="OptionsPanel/VBox" unique_id=64183814]
+layout_mode = 2
+text = "Sonido: Sí"
+
+[node name="CloseButton" type="Button" parent="OptionsPanel/VBox" unique_id=1685171027]
+layout_mode = 2
+theme_type_variation = &"PillButton"
+text = "Volver"
+
+[node name="HiddenReset" type="Button" parent="." unique_id=570678598]
+layout_mode = 0
+offset_top = 324.0
+offset_right = 144.0
+offset_bottom = 360.0
+focus_mode = 0
+theme_type_variation = &"LetterButton"
+theme_override_font_sizes/font_size = 14
+text = "Nueva partida"
+
+[node name="ResetLabel" type="Label" parent="." unique_id=984930819]
+visible = false
+layout_mode = 0
+offset_left = 8.0
+offset_top = 272.0
+offset_right = 320.0
+offset_bottom = 300.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 6
+text = "Partida reiniciada"
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1114715627]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1296009982]
+libraries/ = SubResource("AnimationLibrary_bhu4a")
+autoplay = &"fade"
+
+[connection signal="pressed" from="Letter/VBox/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="Letter/VBox/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="Letter/VBox/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="OptionsPanel/VBox/MusicButton" to="." method="_on_music_button_pressed"]
+[connection signal="pressed" from="OptionsPanel/VBox/SfxButton" to="." method="_on_sfx_button_pressed"]
+[connection signal="pressed" from="OptionsPanel/VBox/CloseButton" to="." method="_on_close_options_pressed"]
+[connection signal="pressed" from="HiddenReset" to="." method="_on_hidden_reset_pressed"]

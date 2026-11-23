@@ -1,23 +1,23 @@
-[gd_scene load_steps=4 format=3 uid="uid://signpost"]
+[gd_scene format=3 uid="uid://signpost"]
 
-[ext_resource type="Script" path="res://scripts/SignPost.gd" id="1_sign"]
-[ext_resource type="Texture2D" path="res://assets/sprites/props/sign.png" id="2_tex"]
+[ext_resource type="Script" uid="uid://b1c88mgr82aee" path="res://scripts/SignPost.gd" id="1_sign"]
+[ext_resource type="Texture2D" uid="uid://cbsgjvv0wuc03" path="res://assets/sprites/props/sign.png" id="2_tex"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
 size = Vector2(96, 64)
 
-[node name="SignPost" type="Area2D"]
+[node name="SignPost" type="Area2D" unique_id=1700732002]
 script = ExtResource("1_sign")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1855083907]
 position = Vector2(0, -16)
 texture = ExtResource("2_tex")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=363276804]
 position = Vector2(0, -32)
 shape = SubResource("RectangleShape2D_1")
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=1942631898]
 z_index = 20
 offset_left = -160.0
 offset_top = -88.0
@@ -26,7 +26,7 @@ offset_bottom = -40.0
 theme_override_colors/font_color = Color(1, 0.95, 0.8, 1)
 theme_override_colors/font_outline_color = Color(0.1, 0.07, 0.12, 1)
 theme_override_constants/outline_size = 6
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 11
 horizontal_alignment = 1
 vertical_alignment = 2
 

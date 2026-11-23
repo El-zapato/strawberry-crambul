@@ -23,7 +23,10 @@ func _process(delta: float) -> void:
 	title.position.y = _title_y + round(sin(_time * 1.5) * 4.0)
 
 func _on_play_button_pressed() -> void:
-	SceneManager.go_to_character_select()
+	if GameData.intro_vista:
+		SceneManager.go_to_character_select()
+	else:
+		get_tree().change_scene_to_file("res://scenes/ui/Intro-juego.tscn")
 
 func _on_quit_button_pressed() -> void:
 	get_tree().quit()

@@ -1,34 +1,70 @@
-[gd_scene format=4]
+[gd_scene format=4 uid="uid://cw1tf5nitt7s0"]
 
-[ext_resource type="Script" path="res://scripts/Level1.gd" id="1_jsker"]
-[ext_resource type="PackedScene" path="res://scenes/entities/Character1.tscn" id="2_6ex7q"]
+[ext_resource type="Script" uid="uid://dw06owug20wq7" path="res://scripts/Level1.gd" id="1_jsker"]
+[ext_resource type="PackedScene" uid="uid://character1" path="res://scenes/entities/Character1.tscn" id="2_6ex7q"]
 [ext_resource type="PackedScene" path="res://scenes/entities/CharacterSecret.tscn" id="3_ijfg6"]
 [ext_resource type="PackedScene" path="res://scenes/entities/GhostEnemy.tscn" id="4_ijoxy"]
-[ext_resource type="Texture2D" path="res://assets/sprites/backgrounds/sky.png" id="5_t2wor"]
-[ext_resource type="Texture2D" path="res://assets/sprites/backgrounds/clouds.png" id="6_l40or"]
-[ext_resource type="Texture2D" path="res://assets/sprites/backgrounds/hills_far.png" id="7_hnhv5"]
-[ext_resource type="Texture2D" path="res://assets/sprites/backgrounds/hills_near.png" id="8_86um8"]
-[ext_resource type="Texture2D" path="res://assets/sprites/props/house.png" id="9_hpass"]
-[ext_resource type="Texture2D" path="res://assets/sprites/props/bridge_post.png" id="10_srkvl"]
-[ext_resource type="Texture2D" path="res://assets/sprites/props/fence.png" id="11_pgakm"]
-[ext_resource type="Texture2D" path="res://assets/sprites/props/tree.png" id="12_s7ois"]
-[ext_resource type="Texture2D" path="res://assets/sprites/props/bush.png" id="13_rw0oh"]
-[ext_resource type="TileSet" path="res://assets/tilesets/level1_tileset.tres" id="14_tn2kh"]
-[ext_resource type="PackedScene" path="res://scenes/entities/Collectible.tscn" id="15_5p5kc"]
-[ext_resource type="PackedScene" path="res://scenes/entities/SignPost.tscn" id="16_f5x1w"]
-[ext_resource type="PackedScene" path="res://scenes/entities/Checkpoint.tscn" id="17_bfo1x"]
-[ext_resource type="PackedScene" path="res://scenes/entities/Spikes.tscn" id="18_86oi8"]
+[ext_resource type="Texture2D" uid="uid://5vox6frey2d5" path="res://assets/sprites/backgrounds/sky.png" id="5_t2wor"]
+[ext_resource type="Texture2D" uid="uid://fsm15o1kklfw" path="res://assets/sprites/backgrounds/clouds.png" id="6_l40or"]
+[ext_resource type="Texture2D" uid="uid://cn1wp6b6ad7aj" path="res://assets/sprites/backgrounds/hills_far.png" id="7_hnhv5"]
+[ext_resource type="Texture2D" uid="uid://b8g2gdf7f18kn" path="res://assets/sprites/backgrounds/hills_near.png" id="8_86um8"]
+[ext_resource type="Texture2D" uid="uid://c4qspbtybbus5" path="res://assets/sprites/props/house.png" id="9_hpass"]
+[ext_resource type="Texture2D" uid="uid://bgiolt403bln2" path="res://assets/sprites/props/bridge_post.png" id="10_srkvl"]
+[ext_resource type="Texture2D" uid="uid://c4qv2nolmr7ux" path="res://assets/sprites/props/fence.png" id="11_pgakm"]
+[ext_resource type="Texture2D" uid="uid://4xfmv3a1tyhe" path="res://assets/sprites/props/tree.png" id="12_s7ois"]
+[ext_resource type="Texture2D" uid="uid://b0p0s0n17n4ir" path="res://assets/sprites/props/bush.png" id="13_rw0oh"]
+[ext_resource type="TileSet" uid="uid://dd5g2lcptelxj" path="res://assets/tilesets/level1_tileset.tres" id="14_tn2kh"]
+[ext_resource type="PackedScene" uid="uid://collectible" path="res://scenes/entities/Collectible.tscn" id="15_5p5kc"]
+[ext_resource type="PackedScene" uid="uid://signpost" path="res://scenes/entities/SignPost.tscn" id="16_f5x1w"]
+[ext_resource type="PackedScene" uid="uid://checkpoint" path="res://scenes/entities/Checkpoint.tscn" id="17_bfo1x"]
+[ext_resource type="PackedScene" uid="uid://spikes" path="res://scenes/entities/Spikes.tscn" id="18_86oi8"]
 [ext_resource type="PackedScene" path="res://scenes/entities/SlimeEnemy.tscn" id="19_nd5kg"]
 [ext_resource type="PackedScene" path="res://scenes/entities/JumperEnemy.tscn" id="20_qx1hq"]
 [ext_resource type="PackedScene" path="res://scenes/entities/CrowEnemy.tscn" id="21_uowlq"]
 [ext_resource type="PackedScene" path="res://scenes/entities/PlantEnemy.tscn" id="22_c13hn"]
-[ext_resource type="PackedScene" path="res://scenes/ui/HUD.tscn" id="23_hccrk"]
+[ext_resource type="PackedScene" uid="uid://hud" path="res://scenes/ui/HUD.tscn" id="23_hccrk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_if1t5"]
 size = Vector2(192, 192)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a6ynn"]
 size = Vector2(96, 128)
+
+[sub_resource type="Animation" id="Animation_jsker"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_6ex7q"]
+resource_name = "fade-n1"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ijfg6"]
+_data = {
+&"RESET": SubResource("Animation_jsker"),
+&"fade-n1": SubResource("Animation_6ex7q")
+}
 
 [node name="Level1" type="Node2D" unique_id=905629868]
 script = ExtResource("1_jsker")
@@ -76,7 +112,8 @@ centered = false
 [node name="CarpenterHill" type="Node2D" parent="." unique_id=1138577856]
 
 [node name="House" type="Sprite2D" parent="CarpenterHill" unique_id=1175892894]
-position = Vector2(4448, 128)
+position = Vector2(4411, 55)
+scale = Vector2(1.7179486, 1.7604167)
 texture = ExtResource("9_hpass")
 centered = false
 
@@ -330,6 +367,17 @@ position = Vector2(3728, 128)
 shape = SubResource("RectangleShape2D_a6ynn")
 
 [node name="HUD" parent="." unique_id=613397096 instance=ExtResource("23_hccrk")]
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1701223548]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1746361294]
+libraries/ = SubResource("AnimationLibrary_ijfg6")
 
 [connection signal="body_entered" from="HiddenZone" to="." method="_on_hidden_zone_body_entered"]
 [connection signal="body_exited" from="HiddenZone" to="." method="_on_hidden_zone_body_exited"]

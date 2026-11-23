@@ -2,8 +2,6 @@ extends Control
 # Selección de personaje (como en la propuesta: tarjetas con "Jugar" y "Hoja")
 # Los personajes muertos ya no se pueden elegir: solo se ve su cuerpo y su hoja.
 
-const FRAME_IDLE := 0
-const FRAME_DEAD := 5
 const HEART_FULL := preload("res://assets/sprites/ui/heart_full.png")
 const HEART_EMPTY := preload("res://assets/sprites/ui/heart_empty.png")
 
@@ -14,19 +12,21 @@ const CHARACTERS := {
 		"name": "Personaje 1",
 		"ability": "Vuelo temporal con su paraguas.",
 		"story": "Lleva su carta de confesión bien guardada. Quiere ser el primero en llegar a la colina de la carpintera.",
-		"sheet": "res://assets/sprites/characters/character1.png",
+		"portrait": "res://assets/sprites/characters/caracter1.jpeg",
+		"sheet_img": "res://assets/sprites/characters/carcater1-hoja.jpg"
 	},
 	"character2": {
 		"name": "Personaje 2",
 		"ability": "Ataques a distancia.",
 		"story": "No deja que nada ni nadie se interponga entre su carta y la carpintera.",
-		"sheet": "res://assets/sprites/characters/character2.png",
+		"portrait": "res://assets/sprites/characters/caracter1.jpeg",
+		"sheet_img": "res://assets/sprites/characters/carcater1-hoja.jpg"
 	},
 	"secret": {
 		"name": "Carpintera",
 		"ability": "???",
-		"story": "Conoce los secretos del puente mejor que nadie.",
-		"sheet": "res://assets/sprites/characters/character_secret.png",
+		"portrait": "res://assets/sprites/characters/caracter1.jpeg",
+		"sheet_img": "res://assets/sprites/characters/carcater1-hoja.jpg"
 	},
 }
 
@@ -53,11 +53,13 @@ func _refresh_ui() -> void:
 		var id: String = CARD_IDS[card_name]
 		var card: Control = cards.get_node(card_name)
 		var dead := GameData.is_dead(id)
-		card.get_node("Portrait").texture = _portrait(id, dead)
+		
+		# AQUÍ CAMBIAMOS: Cargamos la imagen de retrato directo
+		card.get_node("Portrait").texture = load(CHARACTERS[id]["portrait"])
+		
 		card.get_node("NameLabel").text = CHARACTERS[id]["name"]
 		_show_hearts(card, id, dead)
 		var play: Button = card.get_node("PlayButton")
-		# Muerto: ya no se puede jugar, solo ver su hoja
 		play.visible = not dead
 		if not play.pressed.is_connected(_on_play_pressed):
 			play.pressed.connect(_on_play_pressed.bind(id))
@@ -92,11 +94,6 @@ func _show_hearts(card: Control, id: String, dead: bool) -> void:
 	for i in box.get_child_count():
 		box.get_child(i).texture = HEART_FULL if i < lives else HEART_EMPTY
 
-func _portrait(id: String, dead: bool) -> AtlasTexture:
-	var tex := AtlasTexture.new()
-	tex.atlas = load(CHARACTERS[id]["sheet"])
-	tex.region = Rect2((FRAME_DEAD if dead else FRAME_IDLE) * 48, 0, 48, 64)
-	return tex
 
 func _on_play_pressed(id: String) -> void:
 	SceneManager.current_character = id
@@ -108,7 +105,10 @@ func _on_play_pressed(id: String) -> void:
 func _on_sheet_pressed(id: String) -> void:
 	var data: Dictionary = CHARACTERS[id]
 	var dead := GameData.is_dead(id)
-	sheet_panel.get_node("Sheet/Portrait").texture = _portrait(id, dead)
+	
+	# AQUÍ CAMBIAMOS: Cargamos el dibujo grande de la hoja
+	sheet_panel.get_node("Sheet/Portrait").texture = load(data["sheet_img"])
+	
 	sheet_panel.get_node("Sheet/Info/VBox/NameLabel").text = "Nombre: " + data["name"]
 	sheet_panel.get_node("Sheet/Info/VBox/AbilityLabel").text = "Habilidad: " + data["ability"] \
 		+ ("" if dead else "\nVidas: %d/%d" % [GameData.get_lives(id), GameData.MAX_LIVES])

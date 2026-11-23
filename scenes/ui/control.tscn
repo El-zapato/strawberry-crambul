@@ -1,0 +1,105 @@
+[gd_scene format=3 uid="uid://bdx8rtx6tbh03"]
+
+[ext_resource type="Script" uid="uid://y57bx72iicme" path="res://scripts/INTRO.gd" id="1_fr3c5"]
+[ext_resource type="Texture2D" uid="uid://5mj0nla6wcgo" path="res://assets/sprites/intro/foto-corta.jpeg" id="2_dlu1n"]
+
+[sub_resource type="Animation" id="Animation_0jl2e"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_gexpr"]
+resource_name = "intro"
+length = 10.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.53333336, 1.53, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(5.49, 6.52, 8, 9.098),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_22311"]
+_data = {
+&"RESET": SubResource("Animation_0jl2e"),
+&"intro": SubResource("Animation_gexpr")
+}
+
+[node name="Control" type="Control" unique_id=1617268320]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fr3c5")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=2048334129]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="." unique_id=315057251]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 163.0
+offset_top = 133.0
+offset_right = 484.0
+offset_bottom = 212.0
+theme_override_font_sizes/font_size = 32
+text = "Juego hecho con 
+falta de sueño"
+horizontal_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=800591579]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(326, 181.00002)
+scale = Vector2(0.67184675, 0.62530947)
+texture = ExtResource("2_dlu1n")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1991848592]
+libraries/ = SubResource("AnimationLibrary_22311")
+autoplay = &"intro"
